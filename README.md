@@ -1,0 +1,6 @@
+**Checklist**
+checkIfButtonsAreVisible
+checkSuccessDeliveryInfo
+checkErrorIfFirstNameEmpty
+checkErrorIfPostalEmpty
+checkCompleteCheckout
