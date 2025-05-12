@@ -23,8 +23,8 @@ public class CheckoutTest extends BaseTest{
         productsPage.addToCart("Sauce Labs Backpack");
         productsPage.goToCart();
         cartPage.goToCheckout();
-        Assert.assertTrue(checkoutPage.isCancelButtonPresent());
-        Assert.assertTrue(checkoutPage.isContinueButtonPresent());
+        assertTrue(checkoutPage.isCancelButtonPresent());
+        assertTrue(checkoutPage.isContinueButtonPresent());
     }
 
     @Test
@@ -81,5 +81,41 @@ public class CheckoutTest extends BaseTest{
         cartPage.goToCheckout();
         cartPage.goToFinishPage();
         assertEquals(completePage.checkSuccessOrderMessage(), "Thank you for your order!", "SO BAAAAAD");
+    }
+
+    @Test
+    public void checkSortingByNameASC(){
+        loginPage.open();
+        loginPage.login("standard_user", "secret_sauce");
+        productsPage.getInitialProductNames("az");
+        productsPage.chooseSorting("az");
+        assertTrue(productsPage.areNamesCorrectlySorted("az"));
+    }
+
+    @Test
+    public void checkSortingByNameDESC(){
+        loginPage.open();
+        loginPage.login("standard_user", "secret_sauce");
+        productsPage.getInitialProductNames("za");
+        productsPage.chooseSorting("za");
+        assertTrue(productsPage.areNamesCorrectlySorted("za"));
+    }
+
+    @Test
+    public void checkSortingByPriceASC(){
+        loginPage.open();
+        loginPage.login("standard_user", "secret_sauce");
+        productsPage.getInitialProductPrices("lohi");
+        productsPage.chooseSorting("lohi");
+        assertTrue(productsPage.arePricesCorrectlySorted("lohi"));
+    }
+
+    @Test
+    public void checkSortingByPriceDESC(){
+        loginPage.open();
+        loginPage.login("standard_user", "secret_sauce");
+        productsPage.getInitialProductPrices("hilo");
+        productsPage.chooseSorting("hilo");
+        assertTrue(productsPage.arePricesCorrectlySorted("hilo"));
     }
 }

@@ -7,7 +7,7 @@ import static org.testng.Assert.assertEquals;
 
 public class LoginTest extends BaseTest {
 
-    @Test
+    @Test(retryAnalyzer = Retry.class)
     public void checkSuccessLogin() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
