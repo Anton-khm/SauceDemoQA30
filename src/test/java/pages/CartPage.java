@@ -44,4 +44,24 @@ public class CartPage extends BasePage {
                                         "*[@class = 'inventory_item_price']", product)))
                 .getText().replace("$", ""));
     }
+
+    public void goToCheckout() {
+        driver.findElement(By.id("checkout")).click();
+    }
+
+    public String getPaymentInformation() {
+        return driver.findElement(By.cssSelector("[data-test='payment-info-value']")).getText().substring(11);
+    }
+
+    public String getShippingWay() {
+        return driver.findElement(By.cssSelector("[data-test='shipping-info-value']")).getText();
+    }
+
+    public String getTotalSum(){
+        return driver.findElement(By.cssSelector("[data-test='total-label']")).getText().substring(8);
+    }
+
+    public void goToFinishPage(){
+        driver.findElement(By.id("finish")).click();
+    }
 }

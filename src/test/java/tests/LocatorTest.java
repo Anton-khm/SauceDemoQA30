@@ -72,5 +72,4 @@ public class LocatorTest extends BaseTest {
         driver.findElement(By.cssSelector("[href$='.png']"));
         driver.findElement(By.cssSelector("[class*='social']"));
     }
-
 }
