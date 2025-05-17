@@ -2,11 +2,12 @@ package tests;
 
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
+import org.testng.TestNG;
 
 public class Retry implements IRetryAnalyzer {
 
-    private int attempt = 1;
-    private static final int MAX_RETRY = 3;
+    public static int attempt = 1;
+    public static final int MAX_RETRY = 3;
 
     @Override
     public boolean retry(ITestResult iTestResult) {
