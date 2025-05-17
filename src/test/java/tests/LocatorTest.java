@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 
 public class LocatorTest extends BaseTest {
 
-    @Test
+    @Test(testName = "Проверка всех видов локаторов", groups = {"regression"}, priority = 11)
     public void checkLocator() {
         driver.get("https://www.saucedemo.com/");
         loginPage.open();

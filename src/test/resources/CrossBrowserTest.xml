@@ -3,22 +3,16 @@
 <suite thread-count="2" name="Cross Browser test" parallel="tests">
     <test name="Chrome">
         <classes>
-            <class name="tests.LoginTest">
-                <methods>
-                    <include name=""/>
-                    <exclude name=""/>
-                </methods>
-            </class>
             <class name="tests.LoginTest"/>
-            <class name="tests.CartTest"></class>
-            <parameter name="browser" value="chrome"></parameter>
-        </classes>
-    </test> <!-- Test -->
-    <test name="Edge">
-        <classes>
             <class name="tests.CartTest"/>
             <class name="tests.LocatorTest"/>
-            <parameter name="browser" value="edge"></parameter>
+            <parameter name="browser" value="chrome"/>
         </classes>
-    </test> <!-- Test -->
+    </test>
+    <test name="Edge">
+        <classes>
+            <class name="tests.CheckoutTest"/>
+            <parameter name="browser" value="edge"/>
+        </classes>
+    </test>
 </suite>

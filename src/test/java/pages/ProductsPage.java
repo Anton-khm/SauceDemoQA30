@@ -76,7 +76,6 @@ public class ProductsPage extends BasePage {
 
         if (sorting == "lohi") {
             Collections.sort(prices);
-            System.out.println(prices);
             return prices;
         }
                 else {
@@ -113,7 +112,6 @@ public class ProductsPage extends BasePage {
         }
         if(sorting == "lohi") {
             Collections.sort(prices);
-            System.out.println(prices);
         } else {
             Collections.sort(prices, Collections.reverseOrder());
         }
