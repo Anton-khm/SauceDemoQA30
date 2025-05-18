@@ -11,14 +11,14 @@ public class LoginTest extends BaseTest {
     @Test(testName = "Проверка успешного логина", priority = 2, groups = {"smoke"})
     public void checkSuccessLogin() {
         loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.login(user, password);
         assertEquals(productsPage.getTitle(),"Products", "Логин не выполнен");
     }
 
     @Test(testName = "Проверка что логин не происходит при пустом пароле", enabled = false)
     public void checkLoginWithEmptyPassword() {
         loginPage.open();
-        loginPage.login("standard_user", "");
+        loginPage.login(user, "");
         assertEquals(loginPage.getErrorMessage(), "Epic sadface: Password is required", "SO BAAAD");
     }
 

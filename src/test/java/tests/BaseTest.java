@@ -20,6 +20,8 @@ public class BaseTest {
     CartPage cartPage;
     CheckoutPage checkoutPage;
     CompletePage completePage;
+    String user = System.getProperty("user");
+    String password = System.getProperty("secret_sauce");
 
     @Parameters({"browser"})
     @BeforeMethod(alwaysRun = true)
