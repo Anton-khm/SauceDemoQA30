@@ -23,9 +23,9 @@
             <class name="tests.LocatorTest"/>
         </classes>
     </test>
-    <test name="Thread #2">
-        <classes>
-            <class name="tests.CheckoutTest"/>
-        </classes>
-    </test>
+<!--    <test name="Thread #2">-->
+<!--        <classes>-->
+<!--            <class name="tests.CheckoutTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 </suite>

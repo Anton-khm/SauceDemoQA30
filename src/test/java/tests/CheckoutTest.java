@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -29,6 +30,15 @@ public class CheckoutTest extends BaseTest{
     }
 
     @Test(testName = "Проверка на корректность информации о доставке", groups = {"smoke"}, priority = 3)
+    @Epic("Корзина")
+    @Feature("Оформление заказа")
+    @Story("Отображение информации о доставке")
+    @Severity(SeverityLevel.CRITICAL)
+    @Owner("Разработчик")
+    @Description("Проверка отображения корректной информации о доставке")
+    @Link(name="Документация", url = "https://www.saucedemo.com/")
+    @TmsLink("TMS_T1")
+    @Issue("TMS_1")
     public void checkSuccessDeliveryInfo() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");

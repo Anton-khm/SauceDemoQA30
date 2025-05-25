@@ -5,11 +5,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
+import org.testng.ITestContext;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 import pages.*;
 
 import java.time.Duration;
+
+import static tests.AllureUtils.takeScreenshot;
 
 @Listeners({TestListener.class})
 public class BaseTest {
@@ -24,8 +28,8 @@ public class BaseTest {
     String password = System.getProperty("secret_sauce");
 
     @Parameters({"browser"})
-    @BeforeMethod(alwaysRun = true)
-    public void setup(@Optional ("chrome") String browser) {
+    @BeforeMethod(alwaysRun = true, description = "Открытие браузера")
+    public void setup(@Optional ("chrome") String browser, ITestContext context) {
         if(browser.equalsIgnoreCase("chrome")) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--incognito");
@@ -37,6 +41,7 @@ public class BaseTest {
             driver = new EdgeDriver();
         }
 
+        context.setAttribute("driver", driver);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
         softAssert = new SoftAssert();
@@ -47,8 +52,11 @@ public class BaseTest {
         completePage = new CompletePage(driver);
     }
 
-    @AfterMethod(alwaysRun = true)
-    public void teardown(){
+    @AfterMethod(alwaysRun = true, description = "Закрытие браузера")
+    public void tearDown(ITestResult result) {
+        if (ITestResult.FAILURE == result.getStatus()) {
+            takeScreenshot(driver);
+        }
         driver.quit();
     }
 }
