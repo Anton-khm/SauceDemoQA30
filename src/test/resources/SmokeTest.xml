@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="2" name="SauceDemo Smoke Test">
+    <listeners>
+        <listener class-name="tests.TestListener"/>
+        <listener class-name="tests.AnnotationTransformer"/>
+    </listeners>
+    <test name="Thread #1">
+        <groups>
+            <run>
+                <include name="smoke"/>
+                <include name="regression"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="tests.LoginTest">
+                <methods>
+                    <exclude name="login"/>
+                </methods>
+            </class>
+            <class name="tests.LoginTest"/>
+            <class name="tests.CartTest"/>
+            <class name="tests.LocatorTest"/>
+        </classes>
+    </test>
+    <test name="Thread #2">
+        <classes>
+            <class name="tests.CheckoutTest"/>
+        </classes>
+    </test>
+</suite>
