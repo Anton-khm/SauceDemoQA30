@@ -39,7 +39,9 @@ public class BaseTest {
             options.addArguments("--headless");
             driver = new ChromeDriver(options);
         } else if(browser.equalsIgnoreCase("edge")) {
-            driver = new EdgeDriver();
+            EdgeOptions options = new EdgeOptions();
+            options.addArguments("--headless");
+            driver = new EdgeDriver(options);
         }
 
         context.setAttribute("driver", driver);
