@@ -1,9 +1,11 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import tests.AllureUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,10 +27,13 @@ public class ProductsPage extends BasePage {
         return driver.findElement(TITLE).getText();
     }
 
+    @Step("Добавление товара с именем: {product} в корзину")
     public void addToCart(String product) {
         driver.findElement(By.xpath(String.format(ADD_TO_CART_PATTERN, product))).click();
+    //    AllureUtils.takeScreenshot(driver);  --делает скрин на шаге
     }
 
+    @Step("Переход в корзину")
     public void goToCart() {
         driver.findElement(CART_BUTTON).click();
     }

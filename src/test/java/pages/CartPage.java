@@ -1,8 +1,10 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import tests.AllureUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +47,13 @@ public class CartPage extends BasePage {
                 .getText().replace("$", ""));
     }
 
+    @Step("Переход на страницу оформления заказа")
     public void goToCheckout() {
         driver.findElement(By.id("checkout")).click();
     }
 
     public String getPaymentInformation() {
+        AllureUtils.takeScreenshot(driver);
         return driver.findElement(By.cssSelector("[data-test='payment-info-value']")).getText().substring(11);
     }
 

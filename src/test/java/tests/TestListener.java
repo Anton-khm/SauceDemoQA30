@@ -1,5 +1,6 @@
 package tests;
 
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -7,6 +8,7 @@ import org.testng.TestNG;
 
 import java.util.concurrent.TimeUnit;
 
+import static tests.AllureUtils.takeScreenshot;
 import static tests.Retry.MAX_RETRY;
 import static tests.Retry.attempt;
 
@@ -37,6 +39,9 @@ public class TestListener implements ITestListener {
                 tng.addListener(new TestListener());
                 tng.run();
         }
+        ITestContext context = iTestResult.getTestContext();
+        WebDriver driver = (WebDriver) context.getAttribute("driver");
+        takeScreenshot(driver);
     }
 
     @Override

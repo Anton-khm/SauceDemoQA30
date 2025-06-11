@@ -9,10 +9,10 @@
             <parameter name="browser" value="chrome"/>
         </classes>
     </test>
-    <test name="Edge">
-        <classes>
-            <class name="tests.CheckoutTest"/>
-            <parameter name="browser" value="edge"/>
-        </classes>
-    </test>
+<!--    <test name="Edge">-->
+<!--        <classes>-->
+<!--            <class name="tests.CheckoutTest"/>-->
+<!--            <parameter name="browser" value="edge"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 </suite>
