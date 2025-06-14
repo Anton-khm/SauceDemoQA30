@@ -21,16 +21,18 @@ public class CartTest extends BaseTest {
     @TmsLink("TMS_T10")
     @Issue("TMS_11")
     public void checkCart() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.goToCart();
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce");
+        productsPage.isPageOpened()
+                .addToCart("Sauce Labs Backpack")
+                .goToCart();
         assertTrue(cartPage.isProductInCart("Sauce Labs Backpack"),
                 "SO BAAAAD");
         assertEquals(cartPage.getProductFromCart(0),
                 "Sauce Labs Backpack",
                 "SO BAAAAAD");
         assertTrue(cartPage.getProductsName().contains("Sauce Labs Backpack"));
-        assertEquals(cartPage.getProductPrice("Sauce Labs Backpack"), 29.5);
+        assertEquals(cartPage.getProductPrice("Sauce Labs Backpack"), 29.99);
     }
 }

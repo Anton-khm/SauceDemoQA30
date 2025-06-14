@@ -3,6 +3,7 @@ package pages;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class LoginPage extends BasePage{
 
@@ -17,9 +18,17 @@ public class LoginPage extends BasePage{
         super(driver);
     }
 
+    @Override
     @Step("Открытие страницы LoginPage")
-    public void open() {
+    public LoginPage open() {
         driver.get(BASE_URL);
+        return this;
+    }
+
+    @Override
+    public LoginPage isPageOpened(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("login-button")));
+        return this;
     }
 
     @Step("Вход в систему с именем пользователя: {username} и паролем: {password}")

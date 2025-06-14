@@ -25,7 +25,7 @@ public class BaseTest {
     CheckoutPage checkoutPage;
     CompletePage completePage;
     String user = System.getProperty("user");
-    String password = System.getProperty("secret_sauce");
+    String password = System.getProperty("password");
 
     @Parameters({"browser"})
     @BeforeMethod(alwaysRun = true, description = "Открытие браузера")
@@ -41,15 +41,16 @@ public class BaseTest {
             driver = new EdgeDriver();
         }
 
-        context.setAttribute("driver", driver);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().window().maximize();
         softAssert = new SoftAssert();
         loginPage = new LoginPage(driver);
         productsPage = new ProductsPage(driver);
         cartPage = new CartPage(driver);
         checkoutPage = new CheckoutPage(driver);
         completePage = new CompletePage(driver);
+
+        context.setAttribute("driver", driver);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
     }
 
     @AfterMethod(alwaysRun = true, description = "Закрытие браузера")

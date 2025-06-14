@@ -10,29 +10,33 @@ public class LoginTest extends BaseTest {
 //retryAnalyzer = Retry.class,
     @Test(testName = "Проверка успешного логина", priority = 2, groups = {"smoke"})
     public void checkSuccessLogin() {
-        loginPage.open();
-        loginPage.login(user, password);
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce");
         assertEquals(productsPage.getTitle(),"Products", "Логин не выполнен");
     }
 
     @Test(testName = "Проверка что логин не происходит при пустом пароле", enabled = false)
     public void checkLoginWithEmptyPassword() {
-        loginPage.open();
-        loginPage.login(user, "");
+        loginPage.open()
+                .isPageOpened()
+                .login(user, "");
         assertEquals(loginPage.getErrorMessage(), "Epic sadface: Password is required", "SO BAAAD");
     }
 
     @Test(testName = "Проверка логина с пустым именем пользователя", priority = 1)
     public void checkLoginWithEmptyLogin() {
-        loginPage.open();
-        loginPage.login("", "");
+        loginPage.open()
+                .isPageOpened()
+                .login("", "");
         assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username is required", "SO BAAAD");
     }
 
     @Test(testName = "Проверка логина с пустыми именем и паролем", priority = 3, description = "Test", alwaysRun = true, invocationCount = 2)
     public void checkLoginWithInvalidLogin() {
-        loginPage.open();
-        loginPage.login("", "");
+        loginPage.open()
+                .isPageOpened()
+                .login("", "");
         assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username is required", "SO BAAAD");
     }
 
@@ -46,8 +50,9 @@ public class LoginTest extends BaseTest {
 
     @Test(testName = "Проверка логина", dataProvider = "loginData")
     public void login(String user, String password, String message) {
-        loginPage.open();
-        loginPage.login(user, password);
+        loginPage.open()
+                .isPageOpened()
+                .login(user, password);
         assertEquals(loginPage.getErrorMessage(), message, "SO BAAAD");
     }
 }

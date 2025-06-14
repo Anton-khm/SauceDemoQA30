@@ -20,11 +20,14 @@ import static org.testng.Assert.assertTrue;
 public class CheckoutTest extends BaseTest{
     @Test(testName = "Проверка на видимость кнопок Cancel и Continue", groups = {"smoke"}, priority = 2)
     public void checkIfButtonsAreVisible() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.goToCart();
-        cartPage.goToCheckout();
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce");
+        productsPage.isPageOpened()
+                .addToCart("Sauce Labs Backpack")
+                .goToCart();
+        cartPage.isPageOpened()
+                .goToCheckout();
         assertTrue(checkoutPage.isCancelButtonPresent());
         assertTrue(checkoutPage.isContinueButtonPresent());
     }
@@ -40,12 +43,16 @@ public class CheckoutTest extends BaseTest{
     @TmsLink("TMS_T1")
     @Issue("TMS_1")
     public void checkSuccessDeliveryInfo() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.goToCart();
-        cartPage.goToCheckout();
-        checkoutPage.checkout("Test", "Test", "123456");
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce");
+        productsPage.isPageOpened()
+                .addToCart("Sauce Labs Backpack")
+                .goToCart();
+        cartPage.isPageOpened()
+                .goToCheckout();
+        checkoutPage.isPageOpened()
+                .checkout("Test", "Test", "123456");
         assertEquals(cartPage.getPaymentInformation(),
                 "31337",
                 "SO BAAAAAD");
@@ -61,12 +68,16 @@ public class CheckoutTest extends BaseTest{
             groups = {"smoke"},
             priority = 4)
     public void checkErrorIfFirstNameEmpty() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.goToCart();
-        cartPage.goToCheckout();
-        checkoutPage.checkout("", "Test", "234344");
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce");
+        productsPage.isPageOpened()
+                .addToCart("Sauce Labs Backpack")
+                .goToCart();
+        cartPage.isPageOpened()
+                .goToCheckout();
+        checkoutPage.isPageOpened()
+                .checkout("", "Test", "234344");
         assertEquals(checkoutPage.getErrorMessage(),
                 "Error: First Name is required",
                 "SO BAAAAAD");
@@ -76,12 +87,16 @@ public class CheckoutTest extends BaseTest{
             groups = {"smoke"},
             priority = 5)
     public void checkErrorIfPostalEmpty() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.goToCart();
-        cartPage.goToCheckout();
-        checkoutPage.checkout("Test", "Test", "");
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce");
+        productsPage.isPageOpened()
+                .addToCart("Sauce Labs Backpack")
+                .goToCart();
+        cartPage.isPageOpened()
+                .goToCheckout();
+        checkoutPage.isPageOpened()
+                .checkout("Test", "Test", "");
         assertEquals(checkoutPage.getErrorMessage(),
                 "Error: Postal Code is required",
                 "SO BAAAAAD");
@@ -91,12 +106,16 @@ public class CheckoutTest extends BaseTest{
             groups = {"smoke"},
             priority = 6)
     public void checkCompleteCheckout() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.goToCart();
-        cartPage.goToCheckout();
-        checkoutPage.checkout("Test", "Test", "123456");
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce");
+        productsPage.isPageOpened()
+                .addToCart("Sauce Labs Backpack")
+                .goToCart();
+        cartPage.isPageOpened()
+                .goToCheckout();
+        checkoutPage.isPageOpened()
+                .checkout("Test", "Test", "123456");
         cartPage.goToFinishPage();
         assertEquals(completePage.checkSuccessOrderMessage(), "Thank you for your order!", "SO BAAAAAD");
     }
@@ -105,10 +124,12 @@ public class CheckoutTest extends BaseTest{
             groups = {"smoke"},
             priority = 7)
     public void checkSortingByNameASC(){
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.getInitialProductNames("az");
-        productsPage.chooseSorting("az");
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce");
+        productsPage.isPageOpened()
+                .getInitialProductNames("az")
+                .chooseSorting("az");
         assertTrue(productsPage.areNamesCorrectlySorted("az"));
     }
 
@@ -116,10 +137,12 @@ public class CheckoutTest extends BaseTest{
             groups = {"smoke"},
             priority = 8)
     public void checkSortingByNameDESC(){
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.getInitialProductNames("za");
-        productsPage.chooseSorting("za");
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce");
+        productsPage.isPageOpened()
+                .getInitialProductNames("za")
+                .chooseSorting("za");
         assertTrue(productsPage.areNamesCorrectlySorted("za"));
     }
 
@@ -127,10 +150,12 @@ public class CheckoutTest extends BaseTest{
             groups = {"smoke"},
             priority = 9)
     public void checkSortingByPriceASC(){
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.getInitialProductPrices("lohi");
-        productsPage.chooseSorting("lohi");
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce");
+        productsPage.isPageOpened()
+                .getInitialProductPrices("lohi")
+                .chooseSorting("lohi");
         assertTrue(productsPage.arePricesCorrectlySorted("lohi"));
     }
 
@@ -138,10 +163,12 @@ public class CheckoutTest extends BaseTest{
             groups = {"smoke"},
             priority = 10)
     public void checkSortingByPriceDESC(){
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.getInitialProductPrices("hilo");
-        productsPage.chooseSorting("hilo");
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce");
+        productsPage.isPageOpened()
+                .getInitialProductPrices("hilo")
+                .chooseSorting("hilo");
         assertTrue(productsPage.arePricesCorrectlySorted("hilo"));
     }
 
@@ -163,19 +190,23 @@ public class CheckoutTest extends BaseTest{
 
     @Test(testName = "Проверка сортировки по имени", dataProvider = "sortingDataNames")
     public void sortingTest(String sorting){
-            loginPage.open();
-            loginPage.login("standard_user", "secret_sauce");
-            productsPage.getInitialProductNames(sorting);
-            productsPage.chooseSorting(sorting);
+            loginPage.open()
+                    .isPageOpened()
+                    .login("standard_user", "secret_sauce");
+            productsPage.isPageOpened()
+                    .getInitialProductNames(sorting)
+                    .chooseSorting(sorting);
             assertTrue(productsPage.areNamesCorrectlySorted(sorting));
     }
 
     @Test(testName = "Проверка сортировки по цене", dataProvider = "sortingDataPrices")
     public void sortingTest2(String sorting){
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.getInitialProductPrices(sorting);
-        productsPage.chooseSorting(sorting);
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce");
+        productsPage.isPageOpened()
+                .getInitialProductPrices(sorting)
+                .chooseSorting(sorting);
         assertTrue(productsPage.arePricesCorrectlySorted(sorting));
     }
 }

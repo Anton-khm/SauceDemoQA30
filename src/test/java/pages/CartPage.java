@@ -4,7 +4,9 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import tests.AllureUtils;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +17,16 @@ public class CartPage extends BasePage {
         super(driver);
     }
 
-    public void open() {
+    @Override
+    public CartPage open() {
         driver.get(BASE_URL + "/cart.html");
+        return this;
+    }
+
+    @Override
+    public CartPage isPageOpened(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("checkout")));
+        return this;
     }
 
     public boolean isProductInCart(String product) {
@@ -48,8 +58,9 @@ public class CartPage extends BasePage {
     }
 
     @Step("Переход на страницу оформления заказа")
-    public void goToCheckout() {
+    public CartPage goToCheckout() {
         driver.findElement(By.id("checkout")).click();
+        return this;
     }
 
     public String getPaymentInformation() {
@@ -65,7 +76,8 @@ public class CartPage extends BasePage {
         return driver.findElement(By.cssSelector("[data-test='total-label']")).getText().substring(8);
     }
 
-    public void goToFinishPage(){
+    public CartPage goToFinishPage(){
         driver.findElement(By.id("finish")).click();
+        return this;
     }
 }

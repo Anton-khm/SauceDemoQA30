@@ -3,6 +3,7 @@ package pages;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CheckoutPage extends BasePage{
     public CheckoutPage(WebDriver driver) {
@@ -16,16 +17,25 @@ public class CheckoutPage extends BasePage{
     private static final By CANCEL_BUTTON = By.id("cancel");
     private static final By ERROR_MESSAGE = By.cssSelector("[data-test='error']");
 
-    public void open() {
+    @Override
+    public CheckoutPage open() {
         driver.get(BASE_URL + "/checkout-step-one.html");
+        return this;
+    }
+
+    @Override
+    public CheckoutPage isPageOpened(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("postal-code")));
+        return this;
     }
 
     @Step("Заполнение информации о заказе: Имя: {firstName}, Фамилия: {lastName}, Почтовый индекс: {postalCode} и нажатие на Продолжить")
-    public void checkout(String firstName, String lastName, String postalCode) {
+    public CheckoutPage checkout(String firstName, String lastName, String postalCode) {
         driver.findElement(FIRST_NAME_FIELD).sendKeys(firstName);
         driver.findElement(LAST_NAME_FIELD).sendKeys(lastName);
         driver.findElement(POSTAL_CODE_FIELD).sendKeys(postalCode);
         driver.findElement(CONTINUE_BUTTON).click();
+        return this;
     }
 
     public String getErrorMessage() {
@@ -39,5 +49,4 @@ public class CheckoutPage extends BasePage{
     public boolean isCancelButtonPresent() {
         return driver.findElement(CANCEL_BUTTON).isDisplayed();
     }
-
 }
