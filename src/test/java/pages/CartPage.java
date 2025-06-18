@@ -58,9 +58,9 @@ public class CartPage extends BasePage {
     }
 
     @Step("Переход на страницу оформления заказа")
-    public CartPage goToCheckout() {
+    public CheckoutPage goToCheckout() {
         driver.findElement(By.id("checkout")).click();
-        return this;
+        return new CheckoutPage(driver);
     }
 
     public String getPaymentInformation() {

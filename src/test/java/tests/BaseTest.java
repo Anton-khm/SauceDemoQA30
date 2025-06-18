@@ -4,12 +4,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 import pages.*;
+import steps.*;
 
 import java.time.Duration;
 
@@ -19,6 +19,12 @@ import static tests.AllureUtils.takeScreenshot;
 public class BaseTest {
     WebDriver driver;
     SoftAssert softAssert;
+    LoginStep loginStep;
+    CartStep cartStep;
+    CheckoutStart checkoutStart;
+    CheckoutFinish checkoutFinish;
+    SortingStep sortingStep;
+
     LoginPage loginPage;
     ProductsPage productsPage;
     CartPage cartPage;
@@ -42,8 +48,13 @@ public class BaseTest {
         }
 
         softAssert = new SoftAssert();
+        loginStep = new LoginStep(driver);
+        cartStep = new CartStep(driver);
+        checkoutStart = new CheckoutStart(driver);
+        checkoutFinish = new CheckoutFinish(driver);
+        sortingStep = new SortingStep(driver);
+
         loginPage = new LoginPage(driver);
-        productsPage = new ProductsPage(driver);
         cartPage = new CartPage(driver);
         checkoutPage = new CheckoutPage(driver);
         completePage = new CompletePage(driver);

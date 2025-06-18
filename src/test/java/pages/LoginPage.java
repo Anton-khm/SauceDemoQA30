@@ -32,10 +32,11 @@ public class LoginPage extends BasePage{
     }
 
     @Step("Вход в систему с именем пользователя: {username} и паролем: {password}")
-    public void login(String username, String password) {
+    public ProductsPage login(String username, String password) {
         driver.findElement(USER_NAME_FIELD).sendKeys(username);
         driver.findElement(PASSWORD_FIELD).sendKeys(password);
         driver.findElement(LOGIN_BUTTON).click();
+        return new ProductsPage(driver);
     }
 
     public String getErrorMessage() {
