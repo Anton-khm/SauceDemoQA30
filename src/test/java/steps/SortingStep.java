@@ -17,14 +17,14 @@ public class SortingStep {
         productsPage
                 .isPageOpened()
                 .chooseSorting(sorting)
-                .saveSortedProductNamesSnapshot(sorting);
+                .saveProductNames();
     }
 
     public void sortPrices(String sorting) {
         productsPage
                 .isPageOpened()
                 .chooseSorting(sorting)
-                .saveSortedProductPricesSnapshot(sorting);
+                .saveProductPrices();
     }
 
     public boolean arePricesSortedCorrectly(String sorting) {

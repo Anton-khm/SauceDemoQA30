@@ -11,6 +11,7 @@ import tests.AllureUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductsPage extends BasePage {
 
@@ -18,8 +19,8 @@ public class ProductsPage extends BasePage {
         super(driver);
     }
 
-    private List<String> lastProductNames;
-    private List<Double> lastProductPrices;
+    private List<String> productNames;
+    private List<Double> productPrices;
 
     private static final By TITLE = By.cssSelector("[data-test=title]");
     private static final By CART_BUTTON = By.cssSelector(".shopping_cart_link");
@@ -62,72 +63,57 @@ public class ProductsPage extends BasePage {
         return this;
     }
 
-    public ProductsPage saveSortedProductNamesSnapshot(String sorting) {
-        List<WebElement> listOfProducts = driver.findElements(By.cssSelector(".inventory_item_name"));
-        this.lastProductNames = new ArrayList<>();
-
-        for (WebElement product : listOfProducts) {
-            this.lastProductNames.add(product.getText());
-        }
-
-        if ("az".equals(sorting)) {
-            Collections.sort(this.lastProductNames);
-        } else if ("za".equals(sorting)) {
-            this.lastProductNames.sort(Collections.reverseOrder());
-        }
-
+    public ProductsPage saveProductNames() {
+        this.productNames = driver.findElements(By.cssSelector(".inventory_item_name"))
+                .stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toList());
         return this;
     }
 
-    public ProductsPage saveSortedProductPricesSnapshot(String sorting) {
-        List<WebElement> listOfProductPrices = driver.findElements(By.cssSelector(".inventory_item_price"));
-        this.lastProductPrices = new ArrayList<>();
-
-        for (WebElement price : listOfProductPrices) {
-            this.lastProductPrices.add(Double.parseDouble(price.getText().substring(1)));
-        }
-
-        if ("lohi".equals(sorting)) {
-            Collections.sort(this.lastProductPrices);
-        } else if ("hilo".equals(sorting)) {
-            this.lastProductPrices.sort(Collections.reverseOrder());
-        }
-
+    public ProductsPage saveProductPrices() {
+        this.productPrices = driver.findElements(By.cssSelector(".inventory_item_price"))
+                .stream()
+                .map(e -> Double.parseDouble(e.getText().replace("$", "")))
+                .collect(Collectors.toList());
         return this;
+    }
+
+    public List<String> getSavedProductNames() {
+        return this.productNames;
+    }
+
+    public List<Double> getSavedProductPrices() {
+        return this.productPrices;
     }
 
     public boolean areNamesCorrectlySorted(String sorting) {
-        List<WebElement> listOfProducts = driver.findElements(By.cssSelector(".inventory_item_name"));
-        ArrayList<String> names = new ArrayList<>();
-        for (WebElement product : listOfProducts) {
-            names.add(product.getText());
+        List<String> names = getSavedProductNames();
+        List<String> sorted = new ArrayList<>(names);
+
+        if ("az".equalsIgnoreCase(sorting)) {
+            Collections.sort(sorted);
+        } else if ("za".equalsIgnoreCase(sorting)) {
+            sorted.sort(Collections.reverseOrder());
+        } else {
+            throw new IllegalArgumentException("Invalid name sorting value: " + sorting);
         }
 
-        ArrayList<String> expectedNames = new ArrayList<>(names);
-        if ("az".equals(sorting)) {
-            Collections.sort(expectedNames);
-        } else if ("za".equals(sorting)) {
-            expectedNames.sort(Collections.reverseOrder());
-        }
-
-        return names.equals(expectedNames);
+        return names.equals(sorted);
     }
 
     public boolean arePricesCorrectlySorted(String sorting) {
-        List<WebElement> listOfProductPrices = driver.findElements(By.cssSelector(".inventory_item_price"));
-        ArrayList<Double> prices = new ArrayList<>();
+        List<Double> prices = getSavedProductPrices();
+        List<Double> sorted = new ArrayList<>(prices);
 
-        for (WebElement price : listOfProductPrices) {
-            prices.add(Double.parseDouble(price.getText().substring(1)));
+        if ("lohi".equalsIgnoreCase(sorting)) {
+            Collections.sort(sorted);
+        } else if ("hilo".equalsIgnoreCase(sorting)) {
+            sorted.sort(Collections.reverseOrder());
+        } else {
+            throw new IllegalArgumentException("Invalid price sorting value: " + sorting);
         }
 
-        ArrayList<Double> expectedPrices = new ArrayList<>(prices);
-        if ("lohi".equals(sorting)) {
-            Collections.sort(expectedPrices);
-        } else if ("hilo".equals(sorting)) {
-            expectedPrices.sort(Collections.reverseOrder());
-        }
-
-        return prices.equals(expectedPrices);
+        return prices.equals(sorted);
     }
 }
