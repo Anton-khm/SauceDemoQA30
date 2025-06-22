@@ -1,6 +1,8 @@
 package tests;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.SourceType;
 import org.testng.annotations.Test;
 
 public class LocatorTest extends BaseTest {
@@ -23,7 +25,7 @@ public class LocatorTest extends BaseTest {
         // Множество предков
         driver.findElement(By.xpath("//a[@id='reset_sidebar_link']/ancestor::nav"));
         driver.findElement(By.xpath("//a[@id='reset_sidebar_link']/ancestor-or-self::a"));
-        driver.findElement(By.xpath("//attribute::style"));
+        driver.findElements(By.xpath("//*[@style]"));
         driver.findElement(By.xpath("//div[@class='bm-menu']/child::*"));
         // Множество потомков
         driver.findElement(By.xpath("//div[@class='bm-menu']/descendant::*"));
@@ -46,7 +48,10 @@ public class LocatorTest extends BaseTest {
         driver.findElement(By.xpath("//nav[count(a)=4]"));
         driver.findElement(By.xpath("id('header_container')"));
         //Вернет текст
-        driver.findElement(By.xpath("string(//div[@class='app_logo'])"));
+        String expression = "string(//div[@class='app_logo'])";
+        System.out.println(expression);
+        //возвращает string вместо WebElement, поэтому ошибка
+        //driver.findElement(By.xpath("string(//div[@class='app_logo'])"));
         //Найдет по объединенному тексту
         driver.findElement(By.xpath("//div[contains(text(), concat('Swag', ' ', 'Labs'))]"));
         //Выбирает теги по длине
@@ -56,7 +61,8 @@ public class LocatorTest extends BaseTest {
         //Логическое И
         driver.findElement(By.xpath("//div[button and img]"));
         //Вернет true если есть элемент
-        driver.findElement(By.xpath("boolean(//div[button and img])"));
+        //возвращает true/false вместо WebElement, поэтому ошибка
+//      driver.findElement(By.xpath("boolean(//div[button and img])"));
 
         //CSS
         driver.findElement(By.cssSelector(".title"));
