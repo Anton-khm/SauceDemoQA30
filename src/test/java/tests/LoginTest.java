@@ -18,7 +18,7 @@ public class LoginTest extends BaseTest {
 
     @Test(testName = "Проверка что логин не происходит при пустом пароле", priority = 4)
     public void checkLoginWithEmptyPassword() {
-        loginStep.auth(user, "");
+        loginStep.auth("test", "");
         assertEquals(loginPage.getErrorMessage(), "Epic sadface: Password is required", "SO BAAAD");
     }
 
