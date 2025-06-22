@@ -17,7 +17,6 @@ public class LoginPage extends BasePage{
     private static final By LOGIN_BUTTON = By.id("login-button");
     private static final By ERROR_MESSAGE = By.xpath("//h3[@data-test='error']");
 
-
     public LoginPage(WebDriver driver) {
         super(driver);
     }
@@ -43,7 +42,7 @@ public class LoginPage extends BasePage{
 
     @Step("Вход в систему с именем пользователя: {username} и паролем: {password}")
     public ProductsPage login(String username, String password) {
-        log.info("Making login with credential: '{}', '{}'", username, password);
+        log.info("Log in with credential: '{}', '{}'", username, password);
         driver.findElement(USER_NAME_FIELD).sendKeys(username);
         driver.findElement(PASSWORD_FIELD).sendKeys(password);
         driver.findElement(LOGIN_BUTTON).click();
