@@ -21,7 +21,7 @@ public class CartTest extends BaseTest {
     @TmsLink("TMS_T10")
     @Issue("TMS_11")
     public void checkCart() {
-        cartStep.addProductToCart("standard_user", "secret_sauce", "Sauce Labs Backpack");
+        cartStep.addProductToCart(user, password, "Sauce Labs Backpack");
         assertTrue(cartPage.isProductInCart("Sauce Labs Backpack"),
                 "SO BAAAAD");
         assertEquals(cartPage.getProductFromCart(0),

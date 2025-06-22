@@ -26,7 +26,7 @@ public class CheckoutTest extends BaseTest {
     @TmsLink("TMS_T1")
     @Issue("TMS_1")
     public void checkSuccessDeliveryInfo() {
-        checkoutStart.goToCheckout("standard_user", "secret_sauce", "Sauce Labs Backpack");
+        checkoutStart.goToCheckout(user, password, "Sauce Labs Backpack");
         checkoutFinish.checkoutFinish("Test", "Test", "123456");
         assertEquals(cartPage.getPaymentInformation(),
                 "31337",
@@ -43,7 +43,7 @@ public class CheckoutTest extends BaseTest {
             groups = {"smoke"},
             priority = 4)
     public void checkErrorIfFirstNameEmpty() {
-        checkoutStart.goToCheckout("standard_user", "secret_sauce", "Sauce Labs Backpack");
+        checkoutStart.goToCheckout(user, password, "Sauce Labs Backpack");
         checkoutFinish.checkoutFinish("", "Test", "234344");
         assertEquals(checkoutPage.getErrorMessage(),
                 "Error: First Name is required",
@@ -54,7 +54,7 @@ public class CheckoutTest extends BaseTest {
             groups = {"smoke"},
             priority = 5)
     public void checkErrorIfPostalEmpty() {
-        checkoutStart.goToCheckout("standard_user", "secret_sauce", "Sauce Labs Backpack");
+        checkoutStart.goToCheckout(user, password, "Sauce Labs Backpack");
         checkoutFinish.checkoutFinish("Test", "Test", "");
         assertEquals(checkoutPage.getErrorMessage(),
                 "Error: Postal Code is required",
@@ -65,7 +65,7 @@ public class CheckoutTest extends BaseTest {
             groups = {"smoke"},
             priority = 6)
     public void checkCompleteCheckout() {
-        checkoutStart.goToCheckout("standard_user", "secret_sauce", "Sauce Labs Backpack");
+        checkoutStart.goToCheckout(user, password, "Sauce Labs Backpack");
         checkoutFinish.checkoutFinish("Test", "Test", "123456");
         cartPage.goToFinishPage();
         assertEquals(completePage.checkSuccessOrderMessage(), "Thank you for your order!", "SO BAAAAAD");
@@ -75,7 +75,7 @@ public class CheckoutTest extends BaseTest {
             groups = {"smoke"},
             priority = 7)
     public void checkSortingByNameASC() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         sortingStep.sortNames("az");
         assertTrue(sortingStep.areNamesSortedCorrectly("az"));
     }
@@ -84,7 +84,7 @@ public class CheckoutTest extends BaseTest {
             groups = {"smoke"},
             priority = 8)
     public void checkSortingByNameDESC() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         sortingStep.sortNames("za");
         assertTrue(sortingStep.areNamesSortedCorrectly("za"));
     }
@@ -93,7 +93,7 @@ public class CheckoutTest extends BaseTest {
             groups = {"smoke"},
             priority = 9)
     public void checkSortingByPriceASC() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         sortingStep.sortPrices("lohi");
         assertTrue(sortingStep.arePricesSortedCorrectly("lohi"));
     }
@@ -102,7 +102,7 @@ public class CheckoutTest extends BaseTest {
             groups = {"smoke"},
             priority = 10)
     public void checkSortingByPriceDESC() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         sortingStep.sortPrices("hilo");
         assertTrue(sortingStep.arePricesSortedCorrectly("hilo"));
     }
@@ -125,14 +125,14 @@ public class CheckoutTest extends BaseTest {
 
     @Test(testName = "Проверка сортировки по имени", dataProvider = "sortingDataNames")
     public void sortingTest(String sorting) {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         sortingStep.sortNames(sorting);
         assertTrue(sortingStep.areNamesSortedCorrectly(sorting));
     }
 
     @Test(testName = "Проверка сортировки по цене", dataProvider = "sortingDataPrices")
     public void sortingTest2(String sorting) {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         sortingStep.sortPrices(sorting);
         assertTrue(sortingStep.arePricesSortedCorrectly(sorting));
     }

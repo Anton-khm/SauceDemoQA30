@@ -11,7 +11,7 @@ public class LocatorTest extends BaseTest {
     public void checkLocator() {
         driver.get("https://www.saucedemo.com/");
         loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.login(user, password);
         driver.findElement(By.id("add-to-cart-sauce-labs-backpack"));
         driver.findElement(By.name("add-to-cart-sauce-labs-bike-light"));
         driver.findElement(By.className("product_sort_container"));

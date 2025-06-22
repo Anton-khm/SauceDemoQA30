@@ -11,7 +11,7 @@ public class LoginTest extends BaseTest {
 //retryAnalyzer = Retry.class,
     @Test(testName = "Проверка успешного логина", priority = 1, groups = {"smoke"})
     public void checkSuccessLogin() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         productsPage = new ProductsPage(driver);
         assertEquals(productsPage.getTitle(),"Products", "Логин не выполнен");
     }
