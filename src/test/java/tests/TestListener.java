@@ -1,5 +1,6 @@
 package tests;
 
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -12,24 +13,25 @@ import static tests.AllureUtils.takeScreenshot;
 import static tests.Retry.MAX_RETRY;
 import static tests.Retry.attempt;
 
+@Log4j2
 public class TestListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        System.out.printf("======================================== STARTING TEST %s ========================================%n", iTestResult.getName());
+        log.info("======================================== STARTING TEST {} ========================================%n", iTestResult.getName());
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        System.out.printf("======================================== FINISHED TEST %s Duration: %ss ========================================%n", iTestResult.getName(),
+        log.info("======================================== FINISHED TEST {} Duration: {} ========================================%n", iTestResult.getName(),
                 getExecutionTime(iTestResult));
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        System.out.printf("======================================== FAILED TEST %s Duration: %ss ========================================%n", iTestResult.getName(),
+        log.error("======================================== FAILED TEST {} Duration: {} ========================================%n", iTestResult.getName(),
                 getExecutionTime(iTestResult));
-            System.out.println("I am in onTestFailure method " +  getTestMethodName(iTestResult) + " failed");
+            log.error("I am in onTestFailure method {} failed", getTestMethodName(iTestResult));
             if (attempt < MAX_RETRY) {
                 attempt++;
                 TestNG tng = new TestNG();
@@ -46,7 +48,7 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        System.out.printf("======================================== SKIPPING TEST %s ========================================%n", iTestResult.getName());
+        log.warn("======================================== SKIPPING TEST {} ========================================%n", iTestResult.getName());
     }
 
     @Override
@@ -65,10 +67,13 @@ public class TestListener implements ITestListener {
     }
 
     private long getExecutionTime(ITestResult iTestResult) {
-        return TimeUnit.MILLISECONDS.toSeconds(iTestResult.getEndMillis() - iTestResult.getStartMillis());
+        long executionTime = TimeUnit.MILLISECONDS.toSeconds(iTestResult.getEndMillis() - iTestResult.getStartMillis());
+        log.info("Getting execution time: {}s", executionTime);
+        return executionTime;
     }
 
     private String getTestMethodName(ITestResult iTestResult) {
+        log.info("Getting test method name");
         return iTestResult.getMethod().getConstructorOrMethod().getMethod().getName();
     }
 }
