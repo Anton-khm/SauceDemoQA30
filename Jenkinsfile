@@ -6,7 +6,7 @@ pipeline {
         maven "maven 3.9.6"
     }
 
-     parameters{
+    parameters{
                     choice(choices: ['chrome', 'firefox', 'edge'], name: 'BROWSER')
                 }
 
