@@ -6,6 +6,10 @@ pipeline {
         maven "maven 3.9.6"
     }
 
+     parameters{
+                    choice(choices: ['chrome', 'firefox', 'edge'], name: 'BROWSER')
+                }
+
     stages {
         stage('Build') {
             steps {
@@ -14,10 +18,6 @@ pipeline {
 
                 // Run Maven on a Unix agent.
                 sh "mvn clean test -Dbrowser=${params.BROWSER}"
-            }
-
-            parameters{
-                choice(choices: ['chrome', 'firefox', 'edge'], name: 'BROWSER')
             }
 
             post {
